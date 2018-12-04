@@ -63,17 +63,12 @@ func addProjectHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//log.Printf("%v", project2)
 	json.NewEncoder(w).Encode(project)
 
 }
 
 //Entry point
 func main() {
-
-	projects = append(projects, Project{ID: 1, Code: "8001", Description: "HelloWorld project", StartDate: time.Date(2018, time.Month(12), 3, 0, 0, 0, 0, time.UTC)})
-	projects = append(projects, Project{ID: 2, Code: "8002", Description: "SOCGEN", StartDate: time.Date(2017, time.Month(12), 3, 0, 0, 0, 0, time.UTC)})
-
 	router := mux.NewRouter()
 
 	router.HandleFunc("/project", listProjectHandler).Methods("GET")
