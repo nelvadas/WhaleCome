@@ -4,10 +4,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/globalsign/mgo"
 	. "github.com/nelvadas/WhaleCome/projectsvc/models"
 	"gopkg.in/mgo.v2/bson"
-
-	"github.com/globalsign/mgo"
 )
 
 //ProjectDAO interface
