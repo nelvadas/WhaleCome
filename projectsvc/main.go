@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
+	. "github.com/nelvadas/WhaleCome/projectsvc/dao"
+	. "github.com/nelvadas/WhaleCome/projectsvc/models"
+	"gopkg.in/mgo.v2/bson"
 )
 
 //Project structure
@@ -23,35 +25,47 @@ type Project struct {
 // Global variable containing projects
 var projects []Project
 
+var dao = ProjectDAO{}
+
 // Retreive the project list
 func listProjectHandler(w http.ResponseWriter, req *http.Request) {
-	json.NewEncoder(w).Encode(projects)
+	projects, err := dao.FindAll()
+	if err == nil {
+		json.NewEncoder(w).Encode(projects)
+	} else {
+		json.NewEncoder(w).Encode([]ProjectDTO{})
+	}
+
 }
 
 // get details on a specific project
 func getProjectHandler(w http.ResponseWriter, req *http.Request) {
 	params := mux.Vars(req)
-	pid, err := strconv.Atoi(params["pid"])
-	if err != nil {
-		return
+	id := params["pid"]
+	log.Printf("Looking for id with id=%v", id)
+	projectItem, err := dao.FindProjectByID(id)
+	if err == nil {
+		json.NewEncoder(w).Encode(projectItem)
+	} else {
+		json.NewEncoder(w).Encode(ProjectDTO{})
 	}
 
-	for _, item := range projects {
-		if item.ID == pid {
-			json.NewEncoder(w).Encode(item)
-			return
-		}
-	}
-	json.NewEncoder(w).Encode(&Project{})
 }
 
 // add a new project
 func addProjectHandler(w http.ResponseWriter, req *http.Request) {
-	var project Project
+	var project ProjectDTO
 	_ = json.NewDecoder(req.Body).Decode(&project)
-	project.ID = len(projects)
-	projects = append(projects, project)
+	project.ID = bson.NewObjectId()
+
+	log.Printf("%v", project)
+	err := dao.InsertProject(project)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//log.Printf("%v", project2)
 	json.NewEncoder(w).Encode(project)
+
 }
 
 //Entry point
