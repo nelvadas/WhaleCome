@@ -1,8 +1,17 @@
-############################
-# STEP 1 build executable binary
-############################
-FROM golang:onbuild
-WORKDIR .
+
+###### STEP 1 build artifact from onbuild
+
+FROM golang:onbuild AS builder
+# Build the image in $GOPATH/bin/app
 RUN  go build -o /go/bin/app
+
+
+###### STEP 2 build a lightweight  runtime image
+
+FROM scratch
+# Copy our  executable.
+COPY --from=builder /go/bin/app .
+# Run the hello binary.
+#Expose port 5000
 EXPOSE 5000
-ENTRYPOINT ["/go/bin/app"]
+ENTRYPOINT ["./app"]
