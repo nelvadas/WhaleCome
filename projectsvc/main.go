@@ -4,26 +4,12 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/mux"
 	. "github.com/nelvadas/WhaleCome/projectsvc/dao"
 	. "github.com/nelvadas/WhaleCome/projectsvc/models"
 	"gopkg.in/mgo.v2/bson"
 )
-
-//Project structure
-// contains information on a project item
-type Project struct {
-	ID          int       `json:"id"`
-	Code        string    `json:"code"`
-	Description string    `json:"description,omitempty"`
-	StartDate   time.Time `json:"from,omitempty"`
-	EndDate     time.Time `json:"to,omitempty"`
-}
-
-// Global variable containing projects
-var projects []Project
 
 var dao = ProjectDAO{}
 
