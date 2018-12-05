@@ -20,8 +20,15 @@ var prj ProjectDTO
 const PRJCOLLECTION = "projects"
 
 func init() {
-	os.Setenv("MONGO_URL", "127.0.0.1:27017")
-	os.Setenv("MONGO_DATABASE", "local")
+
+	if _, urldefined := os.LookupEnv("MONGO_URL"); urldefined == false {
+		os.Setenv("MONGO_URL", "127.0.0.1:27017") //Default value if not defined
+	}
+
+	if _, dbdefined := os.LookupEnv("MONGO_DATABASE"); dbdefined == false {
+		os.Setenv("MONGO_DATABASE", "local") //Default db if not set
+	}
+
 	log.Printf("MONGO_URL=%v", os.Getenv("MONGO_URL"))
 	log.Printf("MONGO_DATABASE=%v", os.Getenv("MONGO_DATABASE"))
 	Connect()
