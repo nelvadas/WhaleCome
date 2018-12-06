@@ -4,8 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/globalsign/mgo"
 	. "github.com/nelvadas/WhaleCome/projectsvc/models"
+
+	"github.com/globalsign/mgo"
 	"gopkg.in/mgo.v2/bson"
 )
 

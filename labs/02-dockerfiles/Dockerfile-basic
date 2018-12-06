@@ -1,0 +1,7 @@
+FROM golang:onbuild
+LABEL com.docker.training.unit=docker101 \
+      com.docker.training.app=projectsvc
+WORKDIR .
+RUN  go build -o /go/bin/app
+EXPOSE 5000
+ENTRYPOINT ["/go/bin/app"]

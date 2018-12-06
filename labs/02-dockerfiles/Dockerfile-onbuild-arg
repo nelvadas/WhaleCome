@@ -1,0 +1,19 @@
+
+###### STEP 1 build artifact from onbuild
+ARG  BASE_IMAGE_TAG=onbuild
+FROM golang:${BASE_IMAGE_TAG} AS builder
+# Build the image in $GOPATH/bin/app
+RUN  env GOOS=linux GOARCH=386 go build -o /go/bin/app
+
+
+###### STEP 2 build a lightweight  runtime image
+
+FROM scratch
+LABEL com.docker.training.unit=docker101 \
+      com.docker.training.app=projectsvc
+# Copy our  executable.
+COPY --from=builder /go/bin/app .
+# Run the hello binary.
+#Expose port 5000
+EXPOSE 5000
+ENTRYPOINT ["./app"]

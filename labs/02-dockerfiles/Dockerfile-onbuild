@@ -3,12 +3,14 @@
 
 FROM golang:onbuild AS builder
 # Build the image in $GOPATH/bin/app
-RUN  go build -o /go/bin/app
+RUN  env GOOS=linux GOARCH=386 go build -o /go/bin/app
 
 
 ###### STEP 2 build a lightweight  runtime image
 
 FROM scratch
+LABEL com.docker.training.unit=docker101 \
+      com.docker.training.app=projectsvc
 # Copy our  executable.
 COPY --from=builder /go/bin/app .
 # Run the hello binary.

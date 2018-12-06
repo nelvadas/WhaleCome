@@ -5,9 +5,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
 	. "github.com/nelvadas/WhaleCome/projectsvc/dao"
 	. "github.com/nelvadas/WhaleCome/projectsvc/models"
+
+	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2/bson"
 )
 
