@@ -90,3 +90,31 @@ CONTAINER ID        IMAGE                               COMMAND                 
 44384e10c7dd        mongo                               "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:32772->27017/tcp   03-dockercompose_db_1_e608772ee8e3
 a5fa8b774e6a        nelvadas/whalecome-projectapi:1.4   "./app"                  About a minute ago   Up About a minute   0.0.0.0:8080->5000/tcp     03-dockercompose_api_1_87b719814cfc
 ```
+
+
+
+
+```
+$ docker-compose -f docker-compose-build.yml  build
+db uses an image, skipping
+
+```
+
+
+```
+$ docker-compose -f docker-compose-build.yml  stop
+Restarting 03-dockercompose_api_1_dd56af0df581 ... done
+Restarting 03-dockercompose_db_1_5b6e23cdfa03  ... done
+```
+
+
+```
+$ docker-compose -f docker-compose-build.yml  up -d
+$ http  localhost:8080/healthz
+HTTP/1.1 200 OK
+Content-Length: 5
+Content-Type: text/plain; charset=utf-8
+Date: Fri, 07 Dec 2018 15:01:46 GMT
+
+"ok"
+```
