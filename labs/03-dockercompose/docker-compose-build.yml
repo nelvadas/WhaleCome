@@ -1,0 +1,18 @@
+version: '3'
+services:
+  api:
+    image: 'nelvadas/whalecome-projectapi:1.4'
+    build:
+      context: ../../projectsvc/
+      dockerfile: ../labs/02-dockerfiles/Dockerfile-onbuild-arg
+      args:
+        BASE_IMAGE_TAG: onbuild
+    environment:
+     - MONGO_URL=db
+     - MONGO_DATABASE=projects
+    ports:
+     - "8080:5000"
+  db:
+    image: 'mongo'
+    ports:
+     - "27017"

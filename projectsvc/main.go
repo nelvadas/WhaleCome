@@ -54,10 +54,15 @@ func addProjectHandler(w http.ResponseWriter, req *http.Request) {
 
 }
 
+// healthCheckHandler
+func healthCheckHandler(w http.ResponseWriter, req *http.Request) {
+	json.NewEncoder(w).Encode("ok")
+}
+
 //Entry point
 func main() {
 	router := mux.NewRouter()
-
+	router.HandleFunc("/healthz", healthCheckHandler).Methods("GET")
 	router.HandleFunc("/project", listProjectHandler).Methods("GET")
 	router.HandleFunc("/project/{pid}", getProjectHandler).Methods("GET")
 	router.HandleFunc("/project", addProjectHandler).Methods("POST")
