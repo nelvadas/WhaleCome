@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+    image: 'docker.io/nelvadas/whalecome-projectapi:1.2'
+    environment:
+     - MONGO_URL=db
+     - MONGO_DATABASE=projects
+    ports:
+     - "8080:5000"
+  db:
+    image: 'mongo'
+    ports:
+     - "27017"
