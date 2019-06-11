@@ -2,7 +2,6 @@
 Labs  (https://github.com/BretFisher/udemy-docker-mastery/tree/master/swarm-app-1)
 
 ## Lab1
-
 ```
 docker network create --driver overlay  frontend
 docker network create --driver overlay  backend
